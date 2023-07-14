@@ -1,0 +1,93 @@
+//given an 2-d array of size m*n which represents map of 1s and 0s where 1s represent island one represent water find the total number of island
+//island is formed by connecting adjacent lands horizontally or vertically;
+#include<bits/stdc++.h>
+using namespace std;
+  int m,n;
+	int a[1001][1001];
+	bool visited[1001][1001];
+
+	bool issafe(int x,int y)
+	{
+		if(x>=0&&y>=0&&x<m&&y<n&&a[x][y]==1&&visited[x][y]==false)
+		return true;
+		return false;
+		
+	}
+void bfs(int i,int j)
+{
+	queue<pair<int,int> >q;
+	q.push({i,j});
+	visited[i][j]=true;
+	while(!q.empty())
+	{
+		pair<int,int> cur=q.front();
+	      int x=cur.first;
+	      int y=cur.second;
+	      q.pop();
+		  	      if(issafe(x+1,y))
+	      {
+	      	q.push({x+1,y});
+	      	visited[x+1][y]=true;
+		  }
+		     if(issafe(x,y+1))
+	      {
+	      		q.push({x,y+1});
+	      	visited[x][y+1]=true;
+		  }
+		   if(issafe(x-1,y))
+		   {
+		   		q.push({x-1,y});
+	      	visited[x-1][y]=true;
+		   	
+		   }
+		      if(issafe(x,y-1))
+	      {
+	      		q.push({x,y-1});
+	      	visited[x][y-1]=true;
+		  }
+		  
+		  
+		  
+	}
+}
+int main()
+{
+
+	cin>>m>>n;
+
+	for(int i=0;i<m;i++)
+	{
+		for(int j=0;j<n;j++)
+		{
+			cin>>a[i][j];
+			visited[i][j]=false;
+			
+		}
+	}
+		for(int i=0;i<m;i++)
+	{
+		for(int j=0;j<n;j++)
+		{
+			cout<<a[i][j]<<" ";
+		
+			
+		}
+		cout<<endl;
+	}
+	cout<<endl;
+	int count=0;
+		for(int i=0;i<m;i++)
+	{
+		for(int j=0;j<n;j++)
+		{
+			if(a[i][j]==1&&visited[i][j]==false)
+			{
+			bfs(i,j);
+			
+			count++;
+		}
+		}
+	}
+	cout<<count;
+	
+}
